@@ -40,7 +40,7 @@ return(
 <RightContent rooms={data}/>
 
   </Suspense>
-  <section className="w-full bg-neutral-800 ml-[230px] min-h-[100vh] flex-col flex items-center justify-between flex-wrap ">
+  <section className="w-full bg-neutral-800 ml-[100px] sm:ml-[230px] min-h-[100vh] flex-row flex items-center justify-between flex-wrap ">
       {children}
     {/* <div className="w-full flex self-end align-center justify-center flex-row flex-wrap py-2 my-4">
         <form className="w-full rounded-md bg-neutral-700 py-2 flex-1 flex items-center justify-between px-3 flex-wrap flex-row">

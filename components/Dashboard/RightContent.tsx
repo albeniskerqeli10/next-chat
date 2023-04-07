@@ -53,17 +53,17 @@ const RightContent = ({rooms}:any) => {
 //  }
 // },[status,router])
   return (
-    <aside className="w-[230px] min-h-[100vh] bg-neutral-950  fixed top-0 left-0 right-0 flex items-start justify-between flex-col flex-wrap">
+    <aside className="w-[100px] sm:w-[230px] min-h-[100vh] bg-neutral-950  fixed top-0 left-0 right-0 flex items-start justify-between flex-col flex-wrap">
       <div className="w-full flex flex-col flex-wrap">
-<div className='w-full flex items-center justify-between flex-row flex-wrap py-4 px-6'>
-<h1>Channels</h1>
+<div className='w-full flex items-center justify-between flex-row flex-wrap py-4 px-1 sm:py-4 sm:px-6'>
+<h1 className="text-xs sm:text-lg">Channels</h1>
 <Plus onClick={handleChatRoom}/>
 </div>
-<div className="py-3 px-6 flex flex-col flex-wrap">
+<div className="px-1 py-1 sm:py-3 sm:px-6 flex flex-col flex-wrap">
 <ul>
 
     {rooms?.map((room:any) => (
-<li className={`py-2 ${pathname?.includes(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link href={`/dashboard/${room.id}`}>{room.title}</Link>
+<li className={`py-2 px-1 ${pathname?.includes(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] sm:text-md" href={`/dashboard/${room.id}`}>{room.title}</Link>
 </li>
 ))}
      </ul>
