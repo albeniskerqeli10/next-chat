@@ -5,8 +5,9 @@ import { Inter } from 'next/font/google'
 import styles from './page.module.css'
 import Link from 'next/link'
 import { useSession, signIn, signOut } from "next-auth/react"
-
-
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { redirect } from 'next/navigation';
 
 
 
@@ -39,7 +40,15 @@ const exampleChatRoom  = {
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const {data} = useSession();
+    const router = useRouter();
+
+        if(session !== null) {
+            redirect("/dashboard");
+        }  
+        else {
+          redirect("/login");
+        
+      }
   // const createChatRoom = async() => {
   //   try {
   //     await fetch("/api/createPost" ,{
@@ -65,8 +74,8 @@ export default function Home() {
     Logout
   </button>
  ):(
-  <button onClick={() => signIn("github" , {
-  })}  className='py-3 px-6 m-3 bg-blue-600 rounded-lg'>
+  <button onClick={() => router.push
+  ('/login')}  className='py-3 px-6 m-3 bg-blue-600 rounded-lg'>
     Login
   </button>
  )}

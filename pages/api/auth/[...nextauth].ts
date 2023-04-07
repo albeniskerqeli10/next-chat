@@ -2,8 +2,9 @@
 import { useId } from "react"
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
+import GoogleProvider from "next-auth/providers/google"
+// import { PrismaAdapter } from "@next-auth/prisma-adapter"
+// import { prisma } from "@/lib/prisma"
 export const authOptions:any = {
   // adapter: PrismaAdapter(prisma),
 
@@ -20,6 +21,10 @@ export const authOptions:any = {
       
       
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as any,
+      clientSecret:process.env.GOOGLE_CLIENT_SECRET as any,
+    })
    
     
     
