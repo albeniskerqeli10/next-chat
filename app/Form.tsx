@@ -71,7 +71,7 @@ const handleEmojiClick = (emoji:any) => {
         <form onSubmit={handleMessage} className="w-full rounded-md bg-neutral-700 border-2 border-red-500 py-2  flex-1 flex items-center justify-between px-3 flex-wrap flex-row mb-10">
             {showEmojiPicker &&  <div className='absolute right-[80px] mb-[500px]
             '>
-                <EmojiPicker height={400} onEmojiClick={handleEmojiClick} width={400} defaultSkinTone="neutral" lazyLoadEmojis={true}/></div>}
+                <EmojiPicker height={400} onEmojiClick={handleEmojiClick} width={400}  lazyLoadEmojis={true}/></div>}
 
         <input placeholder="Write something" onChange={handleText} value={text} type="text" className="bg-transparent w-[90%] inline outline-none" required />
         <button className="background-transparent"><Send size="16"/></button>

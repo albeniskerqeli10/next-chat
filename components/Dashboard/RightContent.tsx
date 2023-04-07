@@ -1,7 +1,7 @@
 "use client"
-import React, { Suspense } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link';
-import { useSession,signOut, signIn } from 'next-auth/react';
+import { useSession,signOut, signIn, } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter,usePathname } from 'next/navigation';
 import { LogOut, Plus } from 'react-feather';
@@ -46,6 +46,12 @@ const RightContent = ({rooms}:any) => {
     router.refresh();
     // console.log("Channel has been added successfully");
   }
+
+// useEffect(() => {
+//  if(status !== "authenticated") {
+//   router.push("/");
+//  }
+// },[status,router])
   return (
     <aside className="w-[230px] min-h-[100vh] bg-neutral-950  fixed top-0 left-0 right-0 flex items-start justify-between flex-col flex-wrap">
       <div className="w-full flex flex-col flex-wrap">
@@ -66,11 +72,11 @@ const RightContent = ({rooms}:any) => {
     
      </div>
         {/* <input type="search" placeholder="Search rooms"/> */}
-       {status==="authenticated" ?  <div className='flex  py-3 px-6  w-full items-center justify-between flex-row flex-wrap '>
+       {status==="authenticated" &&  <div className='flex  py-3 px-6  w-full items-center justify-between flex-row flex-wrap '>
         <Image src={session?.user?.image as any} width={30} height={30} className='rounded-full' alt="user image"/>
           <h1 className='text-sm'>{session?.user?.name}</h1>
           <LogOut size="16" onClick={() => signOut()}/>
-        </div>:<button onClick={() => signIn("github")}>Log In</button>}
+        </div>}
         </aside>
   )
 }

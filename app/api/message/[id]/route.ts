@@ -1,8 +1,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
-export async function DELETE(request:NextApiRequest, { params }: { params: { id: string } }) {
+import { NextResponse,NextRequest } from "next/server";
+export async function DELETE(request:NextRequest, { params }: { params: { id: string } }) {
 const id = parseInt(params.id)
   try{
       if(!id) return NextResponse.json({message:'No Message ID provided'}, {status:400});
