@@ -9,16 +9,16 @@ const RightContent = ({rooms}:any) => {
   const router = useRouter();
   const pathname = usePathname();
   const {data:session,status} = useSession();
-  const lastPart = pathname?.split('/').pop();
+  // const lastPart = pathname?.split('/').pop();
   const createChatRoom = async() => {
     try {
-      await fetch("/api/createPost" ,{
+      await fetch("/api/room" ,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
         },
         body: JSON.stringify({
-          title:"Programmers",
+          title:"Football is life!",
           author:"Albenis Kerqeli",
           authorId:87654321,
           messages:[
@@ -54,14 +54,14 @@ const RightContent = ({rooms}:any) => {
 <Plus onClick={handleChatRoom}/>
 </div>
 <div className="py-3 px-6 flex flex-col flex-wrap">
-     <Suspense fallback="Loading...">
-    <ul>
+<ul>
+
     {rooms?.map((room:any) => (
-<li className={`py-2 ${Number(lastPart)=== room.id && "border-b-2 border-blue-500"}`} key={room.id}>        <Link href={`/dashboard/${room.id}`}>{room.title}</Link>
+<li className={`py-2 ${pathname?.includes(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link href={`/dashboard/${room.id}`}>{room.title}</Link>
 </li>
 ))}
-</ul>
-     </Suspense>
+     </ul>
+
      </div>
     
      </div>

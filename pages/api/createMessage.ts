@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
+
 const message = {
   id: 1, // Replace with actual value
   content: "Hello world!", // Replace with actual value
@@ -12,6 +12,7 @@ const message = {
 
 const createMessage = async(req:any,res:any) => {
     if(req.method === "POST") {
+      
       const message = await prisma.message.create({
         data:{
           content: req.body.content,

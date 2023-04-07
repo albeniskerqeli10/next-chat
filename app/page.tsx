@@ -38,22 +38,22 @@ const exampleChatRoom  = {
 
 
 export default function Home() {
-  const { data: session, status } = useSession()
-  // console.log(session,status);
-  const createChatRoom = async() => {
-    try {
-      await fetch("/api/createPost" ,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body: JSON.stringify(exampleChatRoom)
-      })
-    }
-    catch(err) {
-      console.log(err);
-    }
-  }
+  const { data: session, status } = useSession();
+  const {data} = useSession();
+  // const createChatRoom = async() => {
+  //   try {
+  //     await fetch("/api/createPost" ,{
+  //       method:"POST",
+  //       headers:{
+  //         "Content-Type":"application/json"
+  //       },
+  //       body: JSON.stringify(exampleChatRoom)
+  //     })
+  //   }
+  //   catch(err) {
+  //     console.log(err);
+  //   }
+  // }
   return (
    <main>
     <h1 className='bg-blue-500 text-white font-3xl p-3'>Candly.</h1>
@@ -70,7 +70,7 @@ export default function Home() {
     Login
   </button>
  )}
- <button onClick={ createChatRoom}>Create a Room</button>
+ {/* <button onClick={ createChatRoom}>Create a Room</button> */}
 
 
    </main> 

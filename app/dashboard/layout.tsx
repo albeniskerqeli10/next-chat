@@ -3,17 +3,21 @@ import Image from "next/image";
 import { Send } from "react-feather";
 import {getServerSession } from "next-auth";
 import { getCurrentUser } from "@/auth/session";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { Suspense } from "react";
+
 type ServerSession = {
     name: string;
     email: string;
     image: string;
 }
+
+export const revalidate = 3600; // revalidate every hour
+
 const Dashboard = async({children}:any) => {
-    const session = await getCurrentUser();
+    // const session = await getCurrentUser();
     
   const getRooms = async() => {
-    const prisma = new PrismaClient();
     const rooms = await prisma.room.findMany({
       select: {
         id: true,
@@ -32,8 +36,10 @@ const Dashboard = async({children}:any) => {
     
 return(
 <main className="w-full overflow-y-hidden h-[100vh] flex items-center justify-center flex-wrap flex-row">
-  <RightContent rooms={data}/>
+<Suspense fallback="Loading..">
+<RightContent rooms={data}/>
 
+  </Suspense>
   <section className="w-full bg-neutral-800 ml-[230px] min-h-[100vh] flex-col flex items-center justify-between flex-wrap ">
       {children}
     {/* <div className="w-full flex self-end align-center justify-center flex-row flex-wrap py-2 my-4">

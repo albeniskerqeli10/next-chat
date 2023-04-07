@@ -1,6 +1,6 @@
+import {prisma} from "@/lib/prisma";
+
 // create a new post using prisma 
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
 const exampleChatRoom:any  = {
     id:123,
     title:"Football Enjoyers",
@@ -43,7 +43,7 @@ if(req.method === "POST") {
     }
   });
     
-    res.status(200).json(room)
+    res.status(200).json(room , )
 }
 }
 

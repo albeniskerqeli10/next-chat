@@ -1,8 +1,12 @@
  //@ts-ignore
-
+import { useId } from "react"
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
-export const authOptions = {
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { prisma } from "@/lib/prisma"
+export const authOptions:any = {
+  // adapter: PrismaAdapter(prisma),
+
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -14,10 +18,17 @@ export const authOptions = {
         }
       }
       
+      
     }),
+   
     
     
     // ...add more providers here
   ],
+  // callbacks: {      // @ts-ignore
+  //      session: async (session, user, sessionToken) => {
+  //       console.log(session,user)
+  //       return Promise.resolve(session)
+  //      }}
 }
 export default NextAuth(authOptions)
