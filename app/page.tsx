@@ -42,27 +42,13 @@ export default function Home() {
   const { data: session, status } = useSession();
     const router = useRouter();
 
-        if(session !== null) {
-            redirect("/dashboard");
-        }  
-        else {
-          redirect("/login");
-        
-      }
-  // const createChatRoom = async() => {
-  //   try {
-  //     await fetch("/api/createPost" ,{
-  //       method:"POST",
-  //       headers:{
-  //         "Content-Type":"application/json"
-  //       },
-  //       body: JSON.stringify(exampleChatRoom)
-  //     })
-  //   }
-  //   catch(err) {
-  //     console.log(err);
-  //   }
-  // }
+    
+    useEffect(() => {
+      if(session === null) {
+       redirect("/login");
+    
+    }
+    },[session])
   return (
    <main>
     <h1 className='bg-blue-500 text-white font-3xl p-3'>Candly.</h1>

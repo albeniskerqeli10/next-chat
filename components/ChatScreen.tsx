@@ -21,7 +21,7 @@ const ChatScreen = ({children}:any) => {
 
 
     return(
-        <div ref={messagesEndRef} className=" overflow-y-scroll overflow-x-hidden w-full  px-5 sm:px-20 h-[80vh] flex items-center justify-between flex-row flex-wrap">
+        <div ref={messagesEndRef} className=" overflow-y-scroll overflow-x-hidden w-full  px-5 sm:px-20 h-[78vh] flex items-center justify-between flex-row flex-wrap">
 
         <div className="w-full flex items-center justify-center flex-wrap flex-row ">
         {/* <h1>Chatting Section</h1> */}

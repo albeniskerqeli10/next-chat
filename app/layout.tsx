@@ -14,11 +14,14 @@ export default function RootLayout({
   children: React.ReactNode,
 }) {
   return (
-    <html lang="en">
-      <GithubSessionProvider>
-      <body className={poppins.className}>{children}</body>
-      </GithubSessionProvider>
+<html lang="en">
+      <body className={poppins.className}>
+        <GithubSessionProvider>
+        {children}
+        </GithubSessionProvider>
+      </body>
     </html>
+
 
   )
 }

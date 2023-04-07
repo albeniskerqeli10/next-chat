@@ -1,12 +1,10 @@
 
-import Image from 'next/image';
-import { Send, Trash } from 'react-feather';
 import { prisma } from "@/lib/prisma";
 import MessageForm from '@/app/Form';
 import ChatScreen from '@/components/ChatScreen';
 import { Suspense } from 'react';
 import { getCurrentUser } from '@/auth/session';
-import ChatDeleteBox from '@/components/Chat/ChatDeleteBox';
+import Chat from '@/components/Chat/Chat';
 
 const message = {
     id: 1, // Replace with actual value
@@ -54,37 +52,20 @@ const ChatRoom = async({params:{chatId}}:any) => {
     // }
 
        return (
-        <>
-        <h1 className="bg-neutral-900 py-4 px-20 w-full">{data?.title}</h1>
+        <div className="h-[100vh]">
+        <h1 className="bg-neutral-900 text-white py-4 px-20 w-full">{data?.title}</h1>
 <ChatScreen>
 <Suspense fallback="Loading...">
 {data?.messages?.map((message:any) => (
-    
-            <div key={message.id} className="w-full py-3 flex items-start justify-between flex-row flex-nowrap sm:flex-wrap ">
-          <div className="flex items-center justify-between flex-nowrap sm:flex-wrap">
-          <Image src={message.authorAvatar} alt="ss" width={50} height={50} className="w-[30px] h-[30px] my-1" />
-        
-        <div className="flex flex-row items-center justify-center flex-nowrap px-3 gap-1">
-       <div>
-       <h2 className="text-sm  text-neutral-300 font-bold">{message.author}</h2>
-        <p className="text-sm inline">
-            {message.content}
-        </p>
-       </div>
-            </div>
- <ChatDeleteBox id={message.id} avatar={message?.authorAvatar}/>
-
-                </div>
-         
-            </div>
+    <Chat key={message.id} message={message}/>
         ))}
 </Suspense>
 </ChatScreen>
 
-    <div className="w-full px-5 sm:px-20 flex self-end align-center justify-center flex-row flex-wrap mt-1 mb-10  sm:py-4 sm:my-1">
+    <div className="w-full  h-[80px] px-5 sm:px-20 flex  align-center justify-center flex-row flex-wrap mt-1 mb-15  pt-5 sm:pb-10 sm:my-1">
       <MessageForm roomId={chatId}/>
     </div>
-    </>
+    </div>
     )
 }
 

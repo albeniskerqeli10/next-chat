@@ -29,7 +29,7 @@ const ChatDeleteBox = ({id,avatar}:any) => {
     
 
     return (
-       session?.user?.image === avatar ? <button className="py-2 px-5 " onClick={() => handleDeleteMessage(id)}><Trash/></button>: <></>
+       session?.user?.image === avatar ? <button className="py-2 px-5 " onClick={() => handleDeleteMessage(id)}><Trash color="white"/></button>: <></>
          
 
     )

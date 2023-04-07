@@ -68,7 +68,7 @@ const handleEmojiClick = (emoji:any) => {
 
     return (
         
-        <form onSubmit={handleMessage} method='POST' className="w-full rounded-md bg-neutral-700 border-2 border-red-500 py-2  flex-1 flex items-center justify-between px-3 flex-nowrap sm:flex-wrap flex-row mb-10">
+        <form id="customForm" onSubmit={handleMessage} method='POST' className="w-full rounded-md bg-neutral-700 border-2 border-red-500 py-2  flex-1 flex items-center justify-between px-3 flex-nowrap sm:flex-wrap flex-row mb-10">
             {showEmojiPicker &&  <div className='absolute right-[80px] mb-[500px]
             '>
                 <EmojiPicker height={400} onEmojiClick={handleEmojiClick} width={400}  lazyLoadEmojis={true}/></div>}

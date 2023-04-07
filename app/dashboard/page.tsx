@@ -1,4 +1,4 @@
-// import RightContent from "@/components/Dashboard/RightContent";
+// import Sidebar from "@/components/Dashboard/Sidebar";
 // import Image from "next/image";
 // import { Send } from "react-feather";
 // import {getServerSession } from "next-auth";
