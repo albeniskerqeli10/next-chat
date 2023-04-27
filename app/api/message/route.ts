@@ -12,6 +12,7 @@ export async function POST(request:Request) {
         authorId:data.authorId,
                 //@ts-ignore
         authorAvatar:data.authorAvatar,
+        image:data.image,
         room:{
           connect:{
             id:parseInt(data.roomId)

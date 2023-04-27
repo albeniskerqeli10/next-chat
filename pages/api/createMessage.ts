@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
-
+import {Message} from '../../components/Chat/Chat'
+import { NextRequest } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 const message = {
   id: 1, // Replace with actual value
   content: "Hello world!", // Replace with actual value
@@ -10,7 +12,7 @@ const message = {
   roomId: 2 // Replace with actual value
 };
 
-const createMessage = async(req:any,res:any) => {
+const createMessage = async(req:NextApiRequest,res:NextApiResponse) => {
     if(req.method === "POST") {
       
       const message = await prisma.message.create({
@@ -18,8 +20,9 @@ const createMessage = async(req:any,res:any) => {
           content: req.body.content,
           author:req.body.author,
           authorId:req.body.authorId,
-                  //@ts-ignore
           authorAvatar:req.body.authorAvatar,
+          image:req.body.image,
+          
           room:{
             connect:{
               id:parseInt(req.body.roomId)

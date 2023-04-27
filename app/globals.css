@@ -118,3 +118,53 @@ border:2px solid transparent;
 
   
 }
+/* 
+
+width
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+Track 
+::-webkit-scrollbar-track {
+  background: #1f1d1d;
+}
+
+ Handle 
+::-webkit-scrollbar-thumb {
+  background: #171717;
+}
+
+Handle on hover 
+::-webkit-scrollbar-thumb:hover {
+  background:#4e4d4d;
+}
+::-webkit-scrollbar-track:nth-child(3) {
+  background: red;
+} */
+
+
+input[type="file"] {
+  min-height:300px;
+  position:relative;
+display:flex;
+align-items: center;
+justify-content:center;
+text-align:center;
+margin:10px 0;
+}
+
+input[type="file"]::before {
+  width:100%;
+  background:#171717;
+  height:300px;
+  /* z-index:100; */
+  content:"";
+  margin:0 auto;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+position:absolute;  
+
+}

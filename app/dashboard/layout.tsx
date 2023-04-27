@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Dashboard/Sidebar";
+import Sidebar from "@/components/Dashboard/Sidebar/Sidebar";
 import Image from "next/image";
 import { Send } from "react-feather";
 import {getServerSession } from "next-auth";

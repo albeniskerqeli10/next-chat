@@ -24,6 +24,11 @@ export const authOptions:any = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as any,
       clientSecret:process.env.GOOGLE_CLIENT_SECRET as any,
+      authorization:{
+        params:{
+          redirect_uri:`${process.env.NEXTAUTH_URL}/api/auth/callback/github`
+        }
+      }
     })
    
     

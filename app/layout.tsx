@@ -26,7 +26,10 @@ export default function RootLayout({
         {children}
         </GithubSessionProvider>
         <Analytics/>
+        <div id="modal-root"></div>
+
       </body>
+
     </html>
 
 

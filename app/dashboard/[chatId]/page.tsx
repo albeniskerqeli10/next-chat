@@ -41,6 +41,8 @@ const ChatRoom = async({params:{chatId}}:any) => {
         return room
     }
     const data:any = await getRoomById();
+    
+    
     //     const createMessage  = async() => {
     //     await fetch("/api/createMessage", {
     //         method:"POST",
@@ -52,7 +54,7 @@ const ChatRoom = async({params:{chatId}}:any) => {
     // }
 
        return (
-        <div className="h-[100vh]">
+        <div className="h-[100vh] w-full flex items-center justify-center flex-row flex-wrap">
         <h1 className="bg-neutral-900 text-white py-4 px-20 w-full">{data?.title}</h1>
 <ChatScreen>
 <Suspense fallback="Loading...">

@@ -27,10 +27,12 @@ model Message {
   content   String
 createdAt DateTime @default(now())
   author    String
+  image String? @db.Text()
   authorId  Int
   authorAvatar String @default("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png")
   room     Room @relation(fields: [roomId], references: [id])
   roomId    Int
+
 @@index([roomId])
 
 }
