@@ -89,7 +89,7 @@ const setToggle = useStore( (state:any) => state.setToggle);
 <ul>
 
     {rooms?.map((room:any) => (
-<li className={`py-2 w-full inline-block px-1 ${pathname?.includes(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
+<li className={`py-2 text-ellipsis w-[20px] sm:w-full px-1 ${pathname?.includes(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
 </li>
 ))}
      </ul>

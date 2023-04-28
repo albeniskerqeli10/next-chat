@@ -1,7 +1,7 @@
 "use client"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react";
-import { Trash } from "react-feather";
+import { Trash2 as Trash } from "react-feather";
 import {useRouter} from 'next/navigation'
 const ChatDeleteBox = ({id,avatar}:any) => {
     const {data:session} = useSession();
