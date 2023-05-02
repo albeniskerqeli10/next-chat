@@ -1,11 +1,11 @@
 
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma/prisma";
 import MessageForm from '@/app/Form';
 import ChatScreen from '@/components/ChatScreen';
 import { Suspense } from 'react';
 import { getCurrentUser } from '@/auth/session';
 import Chat, { Message } from '@/components/Chat/Chat';
-
+import {cache} from 'react'
 
 
   type Room = {
@@ -21,7 +21,7 @@ type RoomParams = {
         roomId:Room["id"]
     }
 }
-  export const revalidate = 3600; // revalidate every hour
+  export const revalidate = 60; // revalidate every hour
 
 const ChatRoom = async({params:{roomId}}:RoomParams) => {
     // const session = await getCurrentUser();
@@ -34,20 +34,21 @@ const ChatRoom = async({params:{roomId}}:RoomParams) => {
                 messages:true
             }
         })
-        return room;
-    }
+        if(!room) {
+            throw new Error("Room not found");
+        }
+else {
+    return room;
+
+}
+    };
     const room = await getRoomById();
        return (
         <div className="h-full w-full flex items-center justify-center flex-row flex-wrap">
-        <h1 className="bg-neutral-900 text-white py-4 px-20 w-full">{room?.title}</h1>
-<ChatScreen>
+        <h1 className="bg-neutral-950 border-b-[1.5px] border-neutral-800 text-white shadow-lg py-4 px-20 w-full">{room?.title}</h1>
 <Suspense fallback="Loading...">
-{room?.messages?.map((message) => (
-    <Chat key={message.id} id={message.id} author={message.author} authorAvatar={message.authorAvatar} content={message.content} image={message.image as any}/>
-        ))}
+<ChatScreen room={room}/>
 </Suspense>
-</ChatScreen>
-
     <div className="w-full h-[80px] self-start px-5 sm:px-20 flex mx-auto  align-center justify-center flex-row flex-wrap mt-1 mb-15   sm:my-1">
       <MessageForm roomId={roomId}/>
     </div>

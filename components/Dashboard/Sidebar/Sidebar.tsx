@@ -1,15 +1,17 @@
 "use client"
 import Link from 'next/link';
-import { useSession,signOut, signIn, } from 'next-auth/react';
+import { useSession,signOut } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter,usePathname } from 'next/navigation';
 import { LogOut, Plus } from 'react-feather';
-import { Component, FormEvent, useState } from 'react';
+import {FormEvent, useState, useTransition } from 'react';
 import Modal from '../../UI/Modal';
 import { useStore } from '@/store/state';
+import {Trash2 as Trash} from 'react-feather';
 const ComponentId = "sidebar";
 const Sidebar = ({rooms}:any) => {
   const router = useRouter();
+  const [isPending,startTransition]=useTransition();
   const pathname = usePathname();
   const {data:session,status} = useSession();
 const toggle = useStore((state:any) => state.modals[ComponentId]);
@@ -21,6 +23,30 @@ const setToggle = useStore( (state:any) => state.setToggle);
   // const lastPart = pathname?.split('/').pop();
 
 
+// border nav item based on current route
+
+
+const handleRoomDelete = async(id:string) => {
+  const formatedID = parseInt(id,10);
+
+  try {
+    const res = await fetch(`/api/room/${formatedID}`, {
+      method:"DELETE"
+    });
+    if(res.ok) {
+      startTransition(() => {
+router.refresh();
+router.push("/dashboard");
+
+      })
+    }
+    else {
+      throw new Error("Something went wrong");
+    }
+  }
+  catch(err) {
+  }
+}
 
   const handleChatRoom = async(e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,21 +74,22 @@ const setToggle = useStore( (state:any) => state.setToggle);
         })
       })
       if(res.ok) {
-        setToggle(ComponentId,false);
         // const id = await res.json().then(data => data.id)
-        router.refresh();
+startTransition(() => {
+          setToggle(ComponentId,false);
+  router.refresh();
+
+})
         // router.push(`/dashboard/${id}`);
 
       }
     }
     catch(err) {
-      console.log(err);
     }
     //@ts-ignore
-    // console.log("Channel has been added successfully");
   }
   return (
-    <aside className="w-[100px]  sm:w-[230px] h-[100vh] bg-neutral-950  fixed top-0 left-0 right-0 flex items-start justify-between flex-col flex-nowrap">
+    <aside className="w-[100px]  sm:w-[230px] h-[100vh] bg-black  fixed top-0 left-0 right-0 flex items-start justify-between flex-col flex-nowrap">
       <div className="w-full flex flex-col flex-wrap">
 <div className='w-full flex items-center justify-between flex-row flex-wrap py-4 px-1 sm:py-4 sm:px-6'>
 <h1 className="text-xs sm:text-lg">Channels</h1>
@@ -85,11 +112,12 @@ const setToggle = useStore( (state:any) => state.setToggle);
 </Modal>}
 {/* <Plus onClick={handleChatRoom}/> */}
 </div>
-<div className="px-1 py-1 sm:py-3 sm:px-6 flex flex-col flex-wrap ">
-<ul>
+<div className="w-full px-1 py-1 sm:py-3 sm:px-6 flex flex-col flex-wrap ">
+<ul className="w-full">
 
     {rooms?.map((room:any) => (
-<li className={`py-2 text-ellipsis w-[20px] sm:w-full px-1 ${pathname?.includes(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
+<li className={`py-2 text-ellipsis w-[20px] flex items-center justify-between sm:w-full  ${pathname?.endsWith(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
+{/* <button onClick={() => handleRoomDelete(room.id)}><Trash/></button> */}
 </li>
 ))}
      </ul>
@@ -99,10 +127,10 @@ const setToggle = useStore( (state:any) => state.setToggle);
      </div>
         {/* <input type="search" placeholder="Search rooms"/> */}
        {status==="authenticated" &&  <div className='flex  py-8 px-6  w-full items-center justify-between sm:justify-between flex-col sm:flex-row flex-wrap '>
-        <Image src={session?.user?.image as any} width={30} height={30} className='rounded-full ' alt="user image"/>
+        <Image decoding='async' src={session?.user?.image as any} width={30} height={30} className='rounded-full ' alt="user image"/>
           <h1 className=' text-[12px] sm:text-sm'>{session?.user?.name}</h1>
           <LogOut size="16" onClick={() => signOut({
-            callbackUrl:"/login",
+            callbackUrl:"/",
           })}/>
         </div>}
         </aside>

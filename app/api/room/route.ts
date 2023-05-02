@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma/prisma";
 export async function POST(request:Request) {
     const data:any= await request.json(); 
 
@@ -27,3 +27,17 @@ export async function POST(request:Request) {
     }
 }
 
+
+export async function DELETE(request:Request, {params}:any) {
+    try{
+        const room = await prisma.room.delete({
+            where: {
+              id: params.id,
+            },
+          });
+                  return NextResponse.json({message:"Room is deleted successfully"} , {status:200});
+    }
+    catch(err) {
+        console.log(err);
+    }
+}

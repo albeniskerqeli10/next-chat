@@ -8,6 +8,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { redirect } from 'next/navigation';
+import { ChevronRight } from 'react-feather'
 
 
 
@@ -44,27 +45,35 @@ export default function Home() {
 
     
     useEffect(() => {
-      if(session === null) {
-       redirect("/login");
+      if(status === "authenticated") {
+       redirect("/dashboard");
     
-    }
-    },[session])
+   }
+  
+   },[status])
   return (
-   <main>
-    <h1 className='bg-blue-500 text-white font-3xl p-3'>Candly.</h1>
-    <Link href="/dashboard">Go to Dashboard</Link>
-
- {status === "authenticated" ? (
+   <main id="homeMain" className='bg-neutral-600 w-full h-full flex items-center justify-center flex-wrap flex-col'>
+    <header className='w-full px-[30px] py-1 flex items-center justify-between  min-h-[50px]'>
+      
+    <h1 className=' text-white font-3xl '>CHATLY</h1>
+    {status === "authenticated" ? (
    <button onClick={() => signOut({
-  })}  className='py-3 px-6 m-3 bg-blue-600 rounded-lg'>
+  })}  className='py-3 px-6   rounded-lg'>
     Logout
   </button>
  ):(
   <button onClick={() => router.push
-  ('/login')}  className='py-3 px-6 m-3 bg-blue-600 rounded-lg'>
+  ('/login')}  className='py-3 px-6   rounded-lg'>
     Login
   </button>
  )}
+    </header>
+    <div className='w-full flex-1 flex   items-center justify-center flex-col'>
+      <h1 className='text-4xl py-3'>The easiest way to chat together!</h1>
+     <button onClick={() => router.push("/login")} className='py-3 my-4 flex flex-row items-center justify-center px-16 rounded-lg bg-gradient-to-r from-[#1170FF] to-[#002DFF]'>Let&apos;s start <ChevronRight/></button>
+    
+    </div>
+
  {/* <button onClick={ createChatRoom}>Create a Room</button> */}
 
 

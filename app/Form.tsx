@@ -1,18 +1,18 @@
 "use client";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useState, useTransition, startTransition } from 'react';
+import { ChangeEvent, FormEvent, useState, useTransition } from 'react';
 import { Send, Camera, Upload , Check} from 'react-feather';
 import { useStore } from '@/store/state';
 import EmojiPicker from 'emoji-picker-react';
 import Modal from '@/components/UI/Modal';
 import Image from 'next/image';
-
 const ComponentId = "MessageForm";
 const MessageForm = ({roomId}:number | any) => {
     const {data:session,status} = useSession();
     const [text,setText]  = useState("");
     const [file,setFile] = useState("");
+    const [isPending,startTransition] = useTransition()
     const [selectedImg,setSelectedImg] = useState("");
     const [showEmojiPicker,setShowEmojiPicker] = useState(false);
 const router = useRouter();
@@ -54,15 +54,16 @@ const handleMedia = (e:ChangeEvent<HTMLInputElement> | any) => {
             })
 
         })
-        console.log(res)
 if(res.ok) {
+startTransition(() => {
     router.refresh();
+
+})
     setFile("");
     setSelectedImg("");
     setText("");
 
 }
-        // console.log('message created successfully');
      }
      else {
         router.push("/login");
@@ -81,7 +82,7 @@ const handleEmojiClick = (emoji:any) => {
 
     return (
         
-        <form id="customForm"  onSubmit={handleMessage} method='POST' className="w-full rounded-md bg-neutral-700  py-2 mt-[15px] flex-1 flex items-center justify-between px-3  flex-nowrap lg:flex-wrap flex-row mb-10">
+        <form id="customForm"  onSubmit={handleMessage} method='POST' className="w-full rounded-md bg-neutral-900  py-2 mt-[15px] flex-1 flex items-center justify-between px-3  flex-nowrap lg:flex-wrap flex-row mb-10">
             {showEmojiPicker &&  <div className='absolute right-[80px] mb-[500px]
             '>
                 <EmojiPicker height={400} onEmojiClick={handleEmojiClick} width={400}  lazyLoadEmojis={true}/></div>}
@@ -95,11 +96,14 @@ const handleEmojiClick = (emoji:any) => {
 
 {toggle && <Modal title="Upload an Image" handleClose={() => setToggle(ComponentId, false)}>
 {selectedImg !== "" ?
+<>
+<div className='w-full px-5 flex'><Image decoding="async" src={selectedImg} width="100" height="100" alt="preview" className="w-full h-[300px] object-cover object-center border-2 border-neutral-700  my-5 shadow-sm "/>
+</div>
 
-<><Image src={selectedImg} width="100" height="100" alt="preview" className="w-full h-[300px] object-cover object-center"/>
-
-<button onClick={submitPhoto}>Submit</button>
-<button onClick={() => setSelectedImg("")}>Remove</button>
+<div className='w-full py-2 min-h-[60px] flex items-center justify-between px-5 flex-row flex-wrap'>
+<button className="bg-blue-700 px-3 py-2 rounded-lg" onClick={submitPhoto}>Submit</button>
+<button className='bg-red-600 px-3 py-2 rounded-lg' onClick={() => setSelectedImg("")}>Cancel</button>
+</div>
 
 </>:
 <>

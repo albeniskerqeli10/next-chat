@@ -1,9 +1,17 @@
 "use client"
 import {useRef,useEffect} from 'react'
 import Image from "next/image";
-const ChatScreen = ({children}:any) => {
-    
+import Chat, { Message } from './Chat/Chat';
+type MessageRef = {
+  current:{
+    scrollTop:number,
+    scrollHeight:number,
+  }
+}    
+const ChatScreen = ({room}:any) => {
+
   const messagesEndRef:any = useRef(null)
+
 
    const scrollToBottom = () => {
     messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight - messagesEndRef.current.clientHeight;
@@ -17,7 +25,7 @@ const ChatScreen = ({children}:any) => {
 
 
 
-});
+},[room.messages.length]);
 
 
     return(
@@ -25,7 +33,9 @@ const ChatScreen = ({children}:any) => {
 
         <div className="w-full flex items-center justify-center flex-wrap flex-row ">
         {/* <h1>Chatting Section</h1> */}
-       {children}
+        {room.messages.map((message:Message) => (
+    <Chat key={message.id} id={message.id} author={message.author} authorAvatar={message.authorAvatar} content={message.content} image={message.image as any}/>
+        ))}
     </div>
    
     </div>

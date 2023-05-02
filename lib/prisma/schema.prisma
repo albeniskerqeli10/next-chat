@@ -30,7 +30,7 @@ createdAt DateTime @default(now())
   image String? @db.Text()
   authorId  Int
   authorAvatar String @default("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png")
-  room     Room @relation(fields: [roomId], references: [id])
+  room     Room @relation(fields: [roomId], references: [id],onDelete: Cascade)
   roomId    Int
 
 @@index([roomId])

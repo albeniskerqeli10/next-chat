@@ -1,6 +1,6 @@
 "use client"
 import { useSession } from "next-auth/react"
-import { useEffect } from "react";
+import { startTransition, useEffect } from "react";
 import { Trash2 as Trash } from "react-feather";
 import {useRouter} from 'next/navigation'
 const ChatDeleteBox = ({id,avatar}:any) => {
@@ -18,12 +18,13 @@ const ChatDeleteBox = ({id,avatar}:any) => {
                 },
             })
             if(res.ok) {
-                router.refresh();
+startTransition(() => {
+    router.refresh();
 
+})
             }
         }
         catch(err) {
-            console.log(err, "ERRRRRR");
         }
            }
     

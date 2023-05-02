@@ -10,14 +10,27 @@ export const authOptions:any = {
 
   // Configure one or more authentication providers
   providers: [
-    GithubProvider({
+    
+    GithubProvider(
+      {
       clientId: process.env.GITHUB_CLIENT_ID as any,
       clientSecret:process.env.GITHUB_CLIENT_SECRET as any,
+      
       authorization:{
         params:{
-          redirect_uri:`${process.env.NEXTAUTH_URL}/api/auth/callback/github`
+          redirect_uri:`${process.env.NEXTAUTH_URL}/api/auth/callback/github`,
+callbacks: {
+  async session({ session, token, user }:any) {
+    // Send properties to the client, like an access_token and user id from a provider.
+    session.accessToken = token.accessToken
+    session.user.id = token.id
+    
+    return session
+  }
+}
         }
-      }
+      ,
+      },
       
       
     }),
@@ -37,7 +50,6 @@ export const authOptions:any = {
   ],
   // callbacks: {      // @ts-ignore
   //      session: async (session, user, sessionToken) => {
-  //       console.log(session,user)
   //       return Promise.resolve(session)
   //      }}
 }
