@@ -15,6 +15,7 @@ const Sidebar = ({rooms}:any) => {
   const pathname = usePathname();
   const {data:session,status} = useSession();
 const toggle = useStore((state:any) => state.modals[ComponentId]);
+const show = useStore((state:any) => state.show);
 const setToggle = useStore( (state:any) => state.setToggle);
   const [roomData,setRoomData] = useState({
     title:"",
@@ -62,7 +63,7 @@ router.push("/dashboard");
           authorId:555555555,
           messages:[
             {
-              content:"Hello world!",             
+              content:`Welcome to ${roomData.title} room!`,             
               author:session?.user?.name,
               
               authorId:555555555
@@ -89,11 +90,12 @@ startTransition(() => {
     //@ts-ignore
   }
   return (
-    <aside className="w-[100px]  sm:w-[230px] h-[100vh] bg-black  fixed top-0 left-0 right-0 flex items-start justify-between flex-col flex-nowrap">
+    <aside className={`w-[100px]  sm:w-[230px] h-[100vh] bg-black  fixed top-0 left-0 right-0 ${!show ? "flex":"hidden"} flex items-start justify-between flex-col flex-nowrap`}>
       <div className="w-full flex flex-col flex-wrap">
 <div className='w-full flex items-center justify-between flex-row flex-wrap py-4 px-1 sm:py-4 sm:px-6'>
-<h1 className="text-xs sm:text-lg">Channels</h1>
-<button onClick={() => setToggle(ComponentId, true)}><Plus/></button>
+  
+<h1 className="text-xs sm:text-lg">Rooms</h1>
+<button onClick={() => setToggle(ComponentId, true)}><Plus aria-label="Add"/></button>
 {toggle && <Modal handleClose={() => setToggle(ComponentId, false)}>
 <form method='POST' onSubmit={handleChatRoom} className='w-full  min-h-[200px] px-5 gap-2 flex items-start justify-center flex-col flex-wrap'>
 <label htmlFor='title' className='py-2 text-sm'>Room Title</label>
@@ -110,14 +112,13 @@ startTransition(() => {
 <button className='bg-gradient-to-r from-[#1170FF] to-[#002DFF] rounded-sm py-3 w-full my-6'>Create</button>
 </form>
 </Modal>}
-{/* <Plus onClick={handleChatRoom}/> */}
 </div>
 <div className="w-full px-1 py-1 sm:py-3 sm:px-6 flex flex-col flex-wrap ">
 <ul className="w-full">
 
     {rooms?.map((room:any) => (
 <li className={`py-2 text-ellipsis w-[20px] flex items-center justify-between sm:w-full  ${pathname?.endsWith(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
-{/* <button onClick={() => handleRoomDelete(room.id)}><Trash/></button> */}
+{/* {<Trash aria-label="Delete" className="cursor-pointer" onClick={() => handleRoomDelete(room.id)} size="16"/>} */}
 </li>
 ))}
      </ul>
@@ -129,7 +130,7 @@ startTransition(() => {
        {status==="authenticated" &&  <div className='flex  py-8 px-6  w-full items-center justify-between sm:justify-between flex-col sm:flex-row flex-wrap '>
         <Image decoding='async' src={session?.user?.image as any} width={30} height={30} className='rounded-full ' alt="user image"/>
           <h1 className=' text-[12px] sm:text-sm'>{session?.user?.name}</h1>
-          <LogOut size="16" onClick={() => signOut({
+          <LogOut aria-label="Logout" size="16" onClick={() => signOut({
             callbackUrl:"/",
           })}/>
         </div>}

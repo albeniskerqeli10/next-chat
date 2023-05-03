@@ -1,7 +1,7 @@
 "use client"
 import {useRef,useEffect} from 'react'
 import Image from "next/image";
-import Chat, { Message } from './Chat/Chat';
+import Chat, { Message } from './Chat/ChatItem';
 type MessageRef = {
   current:{
     scrollTop:number,
@@ -29,7 +29,7 @@ const ChatScreen = ({room}:any) => {
 
 
     return(
-        <div ref={messagesEndRef} className=" overflow-y-scroll overflow-x-hidden w-full  px-5 sm:px-20  h-[78vh] flex items-center justify-between flex-row flex-wrap">
+        <div ref={messagesEndRef} className=" overflow-y-scroll overflow-x-hidden w-full  px-5 sm:px-20  h-[78vh] flex items-end justify-between flex-row flex-wrap">
 
         <div className="w-full flex items-center justify-center flex-wrap flex-row ">
         {/* <h1>Chatting Section</h1> */}

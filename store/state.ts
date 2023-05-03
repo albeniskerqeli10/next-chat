@@ -3,6 +3,8 @@ import {create} from 'zustand';
 type State = {
     modals:object,
     toggle:boolean;
+    showSidebar:boolean;
+    setShow:() => void;
 }
 
 type Modal = {
@@ -12,7 +14,9 @@ type Modal = {
 
 export const useStore = create((set) => ({
     modals:{},
+    show:false,
     toggle: false,
+    setShow: () => set((state:any) => ({ show: !state.show})),
     setToggle: (modalId:Modal["id"],isOpen:Modal["isOpen"]):any => set((state:State) => ({
         modals:{
             ...state.modals,

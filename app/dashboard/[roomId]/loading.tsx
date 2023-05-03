@@ -1,5 +1,4 @@
 import SpinnerIcon from "@/components/Icons/SpinnerIcon";
-import { Loader } from "react-feather"
 
 const loading = () => {
     return (

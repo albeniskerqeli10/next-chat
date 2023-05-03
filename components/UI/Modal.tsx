@@ -23,7 +23,7 @@ const Modal = ({title,handleClose,children}:any) => {
        <div ref={modalRef} className="w-[400px] min-h-[400px] bg-neutral-950 shadow-lg rounded-md flex items-center justify-center flex-wrap flex-row  border border-neutral-800">
        <div className="w-full  flex items-center justify-between px-5 py-4 flex-row">
        <h1>{title || "Create Room"}</h1>
-        <button onClick={ handleClose}><X/></button>
+        <button onClick={ handleClose}><X aria-label="Close"/></button>
        </div>
        <div className="w-full flex items-center justify-center flex-col   ">
        {children}

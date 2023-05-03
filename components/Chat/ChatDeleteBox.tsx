@@ -30,7 +30,7 @@ startTransition(() => {
     
 
     return (
-       session?.user?.image === avatar ? <button className="py-2 px-5 " onClick={() => handleDeleteMessage(id)}><Trash color="white"/></button>: <></>
+       session?.user?.image === avatar ? <button className="py-2 px-5 " onClick={() => handleDeleteMessage(id)}><Trash aria-label="Delete" color="white"/></button>: <></>
          
 
     )

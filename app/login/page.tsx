@@ -27,8 +27,8 @@ const Login = () => {
                 <button onClick={() => signIn
                 ("github" , {
                     callbackUrl:"/dashboard"
-                })} className="bg-neutral-900 rounded-sm hover:bg-gradient-to-r from-[#1170FF] to-[#002DFF] hover:transition-all text-white shadow-md w-full px-5 py-4 flex items-center justify-center flex-row gap-5"><GithubIcon color="white"/>  Continue with Github</button>
-                <button onClick={() => signIn("google", {
+                })} className="bg-neutral-900 rounded-sm hover:bg-gradient-to-r from-[#1170FF] to-[#002DFF] hover:transition-all text-white shadow-md w-full px-5 py-4 flex items-center justify-center flex-row gap-5"><GithubIcon aria-label="Github" color="white"/>  Continue with Github</button>
+                <button aria-label="Google" onClick={() => signIn("google", {
                     callbackUrl:"/dashboard"
                 })} className="bg-neutral-900 rounded-sm hover:bg-gradient-to-r from-[#1170FF] to-[#002DFF] hover:transition-all shadow-md w-full px-5 py-4 flex items-center text-white justify-center flex-row gap-5"><GoogleIcon/>Continue with Google</button>
                </div>

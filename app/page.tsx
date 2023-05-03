@@ -1,10 +1,5 @@
 "use client"
-
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-// import styles from './page.module.css'
-import Link from 'next/link'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { redirect } from 'next/navigation';
@@ -70,11 +65,9 @@ export default function Home() {
     </header>
     <div className='w-full flex-1 flex   items-center justify-center flex-col'>
       <h1 className='text-4xl py-3'>The easiest way to chat together!</h1>
-     <button onClick={() => router.push("/login")} className='py-3 my-4 flex flex-row items-center justify-center px-16 rounded-lg bg-gradient-to-r from-[#1170FF] to-[#002DFF]'>Let&apos;s start <ChevronRight/></button>
+     <button onClick={() => router.push("/login")} className='py-3 my-4 flex flex-row items-center justify-center px-16 rounded-lg bg-gradient-to-r from-[#1170FF] to-[#002DFF]'>Let&apos;s start <ChevronRight aria-label="Right"/></button>
     
     </div>
-
- {/* <button onClick={ createChatRoom}>Create a Room</button> */}
 
 
    </main> 

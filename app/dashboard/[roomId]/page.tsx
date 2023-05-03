@@ -3,11 +3,7 @@ import { prisma } from "@/lib/prisma/prisma";
 import MessageForm from '@/app/Form';
 import ChatScreen from '@/components/ChatScreen';
 import { Suspense } from 'react';
-import { getCurrentUser } from '@/auth/session';
-import Chat, { Message } from '@/components/Chat/Chat';
-import {cache} from 'react'
-
-
+import ChatHeader from "@/components/Chat/ChatHeader";
   type Room = {
     id:string;
     title:string;
@@ -45,7 +41,7 @@ else {
     const room = await getRoomById();
        return (
         <div className="h-full w-full flex items-center justify-center flex-row flex-wrap">
-        <h1 className="bg-neutral-950 border-b-[1.5px] border-neutral-800 text-white shadow-lg py-4 px-20 w-full">{room?.title}</h1>
+  <ChatHeader title={room.title}/>
 <Suspense fallback="Loading...">
 <ChatScreen room={room}/>
 </Suspense>
