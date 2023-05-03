@@ -40,7 +40,7 @@ const uploadImage = async(file:any) => {
         const formData = new FormData();
     formData.append("file",file);
     formData.append("upload_preset",process.env.CLOUDINARY_PRESET as string);
-    const res = await fetch(`https://api.cloudinary.com/v1_1/albenis/image/${process.env.CLOUDINARY_PRESET as string}`, {
+    const res = await fetch("https://api.cloudinary.com/v1_1/albenis/image/upload", {
         method:"POST",
         body:formData
     })
