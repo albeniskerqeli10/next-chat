@@ -2,31 +2,19 @@
 import Link from 'next/link';
 import { useSession,signOut } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter,usePathname } from 'next/navigation';
-import { LogOut, Plus } from 'react-feather';
-import {FormEvent, useState, useTransition } from 'react';
-import Modal from '../../UI/Modal';
+import {usePathname ,useRouter } from 'next/navigation';
+import { LogOut, Plus, Trash2 } from 'react-feather';
 import { useStore } from '@/store/state';
-import {Trash2 as Trash} from 'react-feather';
+import AddRoomModal from './AddRoomModal';
+import { startTransition } from 'react';
 const ComponentId = "sidebar";
-const Sidebar = ({rooms}:any) => {
+const Sidebar = ({rooms}:{rooms:Rooms}) => {
   const router = useRouter();
-  const [isPending,startTransition]=useTransition();
   const pathname = usePathname();
   const {data:session,status} = useSession();
-const toggle = useStore((state:any) => state.modals[ComponentId]);
-const show = useStore((state:any) => state.show);
-const setToggle = useStore( (state:any) => state.setToggle);
-  const [roomData,setRoomData] = useState({
-    title:"",
-    owner:""
-  })
-  // const lastPart = pathname?.split('/').pop();
-
-
-// border nav item based on current route
-
-
+const toggle = useStore((state:State | any) => state.modals[ComponentId]);
+const show = useStore((state:State | any) => state.show);
+const setToggle = useStore( (state:State | any) => state.setToggle);
 const handleRoomDelete = async(id:string) => {
   const formatedID = parseInt(id,10);
 
@@ -48,47 +36,6 @@ router.push("/dashboard");
   catch(err) {
   }
 }
-
-  const handleChatRoom = async(e:FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/room" ,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-          title:roomData.title,
-          author:roomData.owner,
-          authorId:555555555,
-          messages:[
-            {
-              content:`Welcome to ${roomData.title} room!`,             
-              author:session?.user?.name,
-              
-              authorId:555555555
-              
-              
-            }
-          ]
-
-        })
-      })
-      if(res.ok) {
-        // const id = await res.json().then(data => data.id)
-startTransition(() => {
-          setToggle(ComponentId,false);
-  router.refresh();
-
-})
-        // router.push(`/dashboard/${id}`);
-
-      }
-    }
-    catch(err) {
-    }
-    //@ts-ignore
-  }
   return (
     <aside className={`w-[100px]  sm:w-[230px] h-[100vh] bg-black  fixed top-0 left-0 right-0 ${!show ? "flex":"hidden"} flex items-start justify-between flex-col flex-nowrap`}>
       <div className="w-full flex flex-col flex-wrap">
@@ -96,29 +43,14 @@ startTransition(() => {
   
 <h1 className="text-xs sm:text-lg">Rooms</h1>
 <button onClick={() => setToggle(ComponentId, true)}><Plus aria-label="Add"/></button>
-{toggle && <Modal handleClose={() => setToggle(ComponentId, false)}>
-<form method='POST' onSubmit={handleChatRoom} className='w-full  min-h-[200px] px-5 gap-2 flex items-start justify-center flex-col flex-wrap'>
-<label htmlFor='title' className='py-2 text-sm'>Room Title</label>
-
-<input className='w-full my-2 px-4 py-4 text-xs rounded-sm placeholder-neutral-500 bg-neutral-900' type="text" onChange={(e) => setRoomData({
-  ...roomData,
-  title:e.target.value
-} )} placeholder="Enter room name" required name="title"/>
-<label className="py-2 text-sm" htmlFor='owner'>Room Owner</label>
-<input className='w-full my-2 text-xs placeholder-neutral-500 px-4 py-4 rounded-sm  bg-neutral-900' onChange={(e) => setRoomData({
-  ...roomData,
-  owner:e.target.value
-})} type="text" placeholder="Enter room owner" required name="owner"/>
-<button className='bg-gradient-to-r from-[#1170FF] to-[#002DFF] rounded-sm py-3 w-full my-6'>Create</button>
-</form>
-</Modal>}
+{toggle && <AddRoomModal session={session as Session}/>}
 </div>
 <div className="w-full px-1 py-1 sm:py-3 sm:px-6 flex flex-col flex-wrap ">
 <ul className="w-full">
 
-    {rooms?.map((room:any) => (
-<li className={`py-2 text-ellipsis w-[20px] flex items-center justify-between sm:w-full  ${pathname?.endsWith(room.id) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
-{/* {<Trash aria-label="Delete" className="cursor-pointer" onClick={() => handleRoomDelete(room.id)} size="16"/>} */}
+    {rooms?.map((room:Room) => (
+<li className={`py-2 text-ellipsis w-[20px] flex items-center justify-between sm:w-full  ${pathname?.endsWith(room.id as string) && "border-b-2 border-blue-500"}`} key={room.id}>        <Link className="text-[12px] text-white sm:text-base" href={`/dashboard/${room.id}`}>{room.title}</Link>
+ {parseInt(session?.user?.id as string, 10) === parseInt(room.authorId as any) && (<Trash2 aria-label="Delete" className="cursor-pointer" onClick={() => handleRoomDelete(room.id as string)} size="16"/>)}
 </li>
 ))}
      </ul>
@@ -127,7 +59,7 @@ startTransition(() => {
     
      </div>
         {/* <input type="search" placeholder="Search rooms"/> */}
-       {status==="authenticated" &&  <div className='flex  py-8 px-6  w-full items-center justify-between sm:justify-between flex-col sm:flex-row flex-wrap '>
+       {status==="authenticated"&&  <div className='flex  py-8 px-6  w-full items-center justify-between sm:justify-between flex-col sm:flex-row flex-wrap '>
         <Image decoding='async' src={session?.user?.image as any} width={30} height={30} className='rounded-full ' alt="user image"/>
           <h1 className=' text-[12px] sm:text-sm'>{session?.user?.name}</h1>
           <LogOut aria-label="Logout" size="16" onClick={() => signOut({

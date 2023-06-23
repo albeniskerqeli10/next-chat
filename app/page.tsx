@@ -7,33 +7,6 @@ import { ChevronRight } from 'react-feather'
 
 
 
-
-
-const exampleChatRoom  = {
-  
-  title: "General",
-   author:"Dan Abramov",
-   authorId:12345678
-  // createdAt: "2023-04-03T14:30:00Z",
-  // updatedAt: "2023-04-03T14:35:00Z",
-  // messages: {
-  //   create:[
-  //     {
-  //       id: "98765432-dcba-hgfe-lkji-0987654321ba",
-  //       text: "Hello world!",
-  //       roomId: "12345678-abcd-efgh-ijkl-1234567890ab"
-  //     },
-  //     {
-  //       id: "13579024-acbd-egfh-jilk-2468135790ab",
-  //       text: "How's everyone doing?",
-  //       roomId: "12345678-abcd-efgh-ijkl-1234567890ab"
-  //     }
-  //   ]
-  // }
-}
-
-
-
 export default function Home() {
   const { data: session, status } = useSession();
     const router = useRouter();

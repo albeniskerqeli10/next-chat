@@ -19,3 +19,32 @@ const id = parseInt(params.id)
         return  NextResponse.json({ message: 'Error deleting message' }, { status: 500 });
       }
     }
+
+
+    export async function PUT(req:Request, { params }: { params: { id: string } }) {
+      const data:any= await req.json();
+const id = parseInt(params.id)
+// req.headers.set['content-type'] = 'application/json';
+try{
+  if(!id) {
+    return NextResponse.json({message:'No Message ID provided'}, {status:400});
+  }
+  await prisma.message.update({
+    where: {
+      id:id
+    },
+    data: {
+      //@ts-ignore
+      content: data.content
+    },
+  });
+  return NextResponse.json({message:"ChatMessage has been updated successfully"}, {status:200});
+}
+catch(err) {
+  console.log(err);
+}
+
+
+    }
+
+    

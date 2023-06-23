@@ -1,6 +1,6 @@
 
 import { prisma } from "@/lib/prisma/prisma";
-import MessageForm from '@/app/Form';
+import ChatForm from "@/components/Chat/ChatForm";
 import ChatScreen from '@/components/ChatScreen';
 import { Suspense } from 'react';
 import ChatHeader from "@/components/Chat/ChatHeader";
@@ -38,7 +38,7 @@ else {
 
 }
     };
-    const room = await getRoomById();
+    const room:Room | any = await getRoomById();
        return (
         <div className="h-full w-full flex items-center justify-center flex-row flex-wrap">
   <ChatHeader title={room.title}/>
@@ -46,7 +46,7 @@ else {
 <ChatScreen room={room}/>
 </Suspense>
     <div className="w-full h-[80px] self-start px-5 sm:px-20 flex mx-auto  align-center justify-center flex-row flex-wrap mt-1 mb-15   sm:my-1">
-      <MessageForm roomId={roomId}/>
+      <ChatForm roomId={roomId}/>
     </div>
     </div>
     )

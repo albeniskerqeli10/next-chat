@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma/prisma";
 export async function POST(request:Request) {
     const data:any= await request.json(); 
@@ -36,6 +36,21 @@ export async function DELETE(request:Request, {params}:any) {
             },
           });
                   return NextResponse.json({message:"Room is deleted successfully"} , {status:200});
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+
+export async function GET(request:Request) {
+    try{
+        const rooms = await prisma.room.findMany({
+            include: {
+              messages: true
+            }
+          });
+                  return NextResponse.json(rooms , {status:200});
     }
     catch(err) {
         console.log(err);
