@@ -38,6 +38,7 @@ startTransition(() => {
 
     return (
         <div>
+            {/*@ts-ignore */}
 {parseInt(session?.user?.id as string,10) === parseInt(authorId,10) ? <Tippy trigger="click" hideOnClick={false} 
 
 onShown={(instance:any) => {
