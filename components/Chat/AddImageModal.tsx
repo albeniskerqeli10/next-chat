@@ -1,3 +1,4 @@
+"use client"
 import Modal from "../UI/Modal"
 import Image from 'next/image';
 import { useState , startTransition,FormEvent,ChangeEvent,useTransition} from "react";
