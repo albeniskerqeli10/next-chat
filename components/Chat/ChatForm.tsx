@@ -31,6 +31,7 @@ const handleText = (e:ChangeEvent<HTMLInputElement>) => {
         "Content-Type":"application/json"           },
             body:JSON.stringify({
                  author:session?.user?.name,
+                 //@ts-ignore
                authorId:parseInt(session?.user?.id as string,10),
                 authorAvatar:session?.user?.image,
                 roomId:roomId,
