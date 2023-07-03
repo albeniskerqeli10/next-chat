@@ -24,6 +24,7 @@ const handleText = (e:ChangeEvent<HTMLInputElement>) => {
      const handleMessage  = async(e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
       if(session !== null) {
+        console.log(file,'FILE');
        const res =await fetch("/api/message", {      
             method:"POST",
              headers:{

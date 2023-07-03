@@ -54,7 +54,7 @@ startTransition(() => {
           {content}
       </p>
             </div>
-{image && <Image decoding="async"  className="w-full border border-neutral-700 my-5 shadow-sm  object-center max-w-full object-cover h-[300px]" width="200" height="300" src={image as string} alt="chat image"/>
+{image && <Image decoding="async"  className="w-[400px] max-w-full object-cover object-center max-h-full h-full  border border-neutral-700 my-5 shadow-sm " width="400" height="400" src={image as string} alt="chat image"/>
 
 }
      </div>

@@ -3,28 +3,29 @@ import Image from 'next/image';
 import { useState , startTransition,FormEvent,ChangeEvent,useTransition} from "react";
 import { useStore } from "@/store/state";
 import { Upload } from "react-feather";
+import { uploadDirect  } from '@uploadcare/upload-client'
 const ComponentId = "MessageForm";
 const AddImageModal = ({file,setFile}:any) => {
     const [selectedImg,setSelectedImg] = useState("");
+    const [fileInp,setFileInp] = useState<any>("");
     const setToggle = useStore((state:State | any) => state.setToggle);
-    const uploadImage = async() => {
-        try{
-            const formData = new FormData();
-        formData.append("file",file);
-        formData.append("upload_preset",process.env.CLOUDINARY_PRESET as string);
-        const res = await fetch("https://api.cloudinary.com/v1_1/albenis/image/upload", {
-            method:"POST",
-            body:formData
-        })
-        const data = await res.json();
-    return data.secure_url;
-        }
-        catch(err:any) {
-            throw new Error("Something went wrong",err);
-        }
+    // const [imgUrl,setImgUrl] = useState("");
+const uploadImg = async() => {
+    if(fileInp !== "") {
+        const result = await uploadDirect(fileInp, {
+            publicKey: 'f0b7c46d6d07fa4e82ed',
+            store: 'auto',
+           
+          })
+         setFile(result.cdnUrl as any);
+
+          setToggle(ComponentId, false);
     }
+}
+
     const handleMedia = (e:FormEvent<HTMLInputElement> | any ) => {
         if(e?.currentTarget?.files[0]?.type?.match("image.*")) {
+            setFileInp(e?.currentTarget?.files[0]);
             const fileReader= new FileReader();
             fileReader.onload = (e) => {
                     setSelectedImg(e?.target?.result as string);
@@ -35,13 +36,6 @@ const AddImageModal = ({file,setFile}:any) => {
             alert("Please upload an image");
         }
     }
-
-    const submitPhoto = async() => {
-        const image = await uploadImage();
-        setFile(image);
-        setToggle(ComponentId, false);
-        setSelectedImg("");
-    }
     return (
         <Modal aria-label="Upload" title="Upload an Image" handleClose={() => setToggle(ComponentId, false)}>
 {selectedImg !== "" ?
@@ -50,7 +44,7 @@ const AddImageModal = ({file,setFile}:any) => {
 </div>
 
 <div className='w-full py-2 min-h-[60px] flex items-center justify-between px-5 flex-row flex-wrap'>
-<button className="bg-blue-700 px-3 py-2 rounded-lg" onClick={submitPhoto}>Submit</button>
+<button className="bg-blue-700 px-3 py-2 rounded-lg" onClick={uploadImg}>Submit</button>
 <button className='bg-red-600 px-3 py-2 rounded-lg' onClick={() => setSelectedImg("")}>Cancel</button>
 </div>
 
