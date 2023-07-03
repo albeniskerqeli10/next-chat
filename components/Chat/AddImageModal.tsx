@@ -13,7 +13,7 @@ const AddImageModal = ({file,setFile}:any) => {
 const uploadImg = async() => {
     if(fileInp !== "") {
         const result = await uploadDirect(fileInp, {
-            publicKey: 'f0b7c46d6d07fa4e82ed',
+            publicKey: process.env.UPLOADCARE_PUBLIC_KEY as string,
             store: 'auto',
            
           })
